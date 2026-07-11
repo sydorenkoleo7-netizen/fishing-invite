@@ -6,57 +6,151 @@
     <title>Приглашение на рыбалку</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background: #1a1c1e url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=1000') no-repeat center center fixed;
-            background-size: cover;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            /* Рассветный градиент на горизонте */
+            background: linear-gradient(to bottom, #ff7e5f, #feb47b, #1a2a6c);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
+            overflow: hidden;
+            position: relative;
         }
-        .backdrop {
+
+        /* Эффект лучей солнца на рассвете */
+        .sun-rays {
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(8px);
+            top: 0; left: 50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.15) 0%, transparent 60%);
+            transform: translateX(-50%);
             z-index: 1;
+            pointer-events: none;
         }
+
+        /* Живой фон с плавающими рыбами */
+        .aquarium {
+            position: absolute;
+            width: 100%; height: 100%;
+            top: 0; left: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .fish {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0.3;
+            animation: swim linear infinite;
+        }
+        .fish1 { top: 20%; left: -50px; animation-duration: 15s; }
+        .fish2 { top: 60%; left: -50px; animation-duration: 22s; animation-delay: 5s; }
+        .fish3 { top: 80%; left: -50px; animation-duration: 18s; animation-delay: 2s; }
+
+        @keyframes swim {
+            0% { left: -50px; transform: scaleX(1); }
+            50% { left: 105%; transform: scaleX(1); }
+            50.1% { transform: scaleX(-1); }
+            100% { left: -50px; transform: scaleX(-1); }
+        }
+
+        /* Интерактивная зона с поплавком */
+        .float-zone {
+            position: relative;
+            height: 90px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        /* Поплавок */
+        .bobber {
+            font-size: 45px;
+            display: inline-block;
+            transform-origin: bottom center;
+            animation: float-wave 3s ease-in-out infinite;
+            z-index: 2;
+            transition: transform 0.1s;
+        }
+
+        /* Анимация поклевки при клике (добавляется через JS) */
+        .bobber.bite {
+            animation: none;
+            transform: translateY(25px) scaleY(0.9);
+        }
+
+        /* Круги на воде / брызги */
+        .water-ring {
+            position: absolute;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            animation: ripple 3s ease-out infinite;
+            pointer-events: none;
+            top: 55%; width: 60px; height: 20px;
+        }
+        
+        .water-ring.splash {
+            animation: splash-ripple 0.4s ease-out forwards;
+            border-color: rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes float-wave {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-5px) rotate(5deg); }
+        }
+
+        @keyframes ripple {
+            0% { width: 20px; height: 6px; opacity: 1; }
+            100% { width: 120px; height: 35px; opacity: 0; }
+        }
+
+        @keyframes splash-ripple {
+            0% { width: 10px; height: 4px; opacity: 1; border-width: 3px; }
+            100% { width: 90px; height: 25px; opacity: 0; border-width: 1px; }
+        }
+
+        /* Стили карточки */
         .card {
-            background: rgba(30, 32, 34, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(20, 24, 33, 0.82);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             padding: 35px 25px;
             border-radius: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            max-width: 450px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            max-width: 430px;
             width: 100%;
             text-align: center;
             color: #ffffff;
-            z-index: 2;
+            z-index: 10;
             position: relative;
-            transition: all 0.3s ease;
         }
-        .step { display: none; }
-        .step.active { display: block; animation: fadeIn 0.5s ease forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .icon { font-size: 50px; margin-bottom: 15px; display: inline-block; }
-        h1 { font-size: 26px; font-weight: 700; margin-bottom: 15px; line-height: 1.3; }
-        p { color: #ccc; font-size: 16px; line-height: 1.5; margin-bottom: 25px; }
+        .step { display: none; }
+        .step.active { display: block; animation: fadeIn 0.4s ease forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+        h1 { font-size: 24px; font-weight: 700; margin-bottom: 12px; line-height: 1.3; color: #fef08a; }
+        p { color: #e2e8f0; font-size: 15px; line-height: 1.5; margin-bottom: 25px; }
 
         .info-box {
-            background: rgba(255, 255, 255, 0.07);
+            background: rgba(255, 255, 255, 0.06);
             border-radius: 20px;
             padding: 20px;
             text-align: left;
             margin-bottom: 25px;
+            border: 1px solid rgba(255,255,255,0.05);
         }
         .info-item { display: flex; align-items: center; margin-bottom: 12px; font-size: 15px; }
         .info-item:last-child { margin-bottom: 0; }
         .info-item span { margin-right: 12px; font-size: 18px; }
 
-        .btn-group { display: flex; flex-direction: column; gap: 12px; position: relative; }
+        .btn-group { display: flex; flex-direction: column; gap: 12px; }
         .btn {
             width: 100%;
             padding: 16px;
@@ -65,33 +159,30 @@
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s, background 0.2s;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
         }
-        .btn-main { background: #24a1de; color: white; }
-        .btn-main:hover { background: #1d82b3; }
-        .btn-secondary { background: rgba(255, 255, 255, 0.1); color: #fff; }
-        .btn-secondary:hover { background: rgba(255, 255, 255, 0.15); }
+        .btn-main { background: #0284c7; color: white; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.4); }
+        .btn-main:hover { background: #0369a1; }
+        .btn-secondary { background: rgba(255, 255, 255, 0.08); color: #fff; }
         
-        /* Кнопка "Ні", яка тікає */
-        #btn-no { position: relative; transition: all 0.2s ease; }
+        #btn-no { position: relative; transition: transform 0.15s ease; }
 
-        /* Снасти интерактив */
         .gear-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 25px; }
         .gear-item {
-            background: rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.04);
             border: 2px solid transparent;
             padding: 15px;
-            border-radius: 15px;
+            border-radius: 18px;
             cursor: pointer;
             transition: all 0.2s;
         }
         .gear-item.selected {
-            background: rgba(36, 161, 222, 0.15);
-            border-color: #24a1de;
+            background: rgba(2, 132, 199, 0.2);
+            border-color: #38bdf8;
         }
         .gear-item div { font-size: 24px; margin-bottom: 5px; }
         .gear-item label { font-size: 14px; cursor: pointer; display: block; }
@@ -99,28 +190,36 @@
 </head>
 <body>
 
-    <div class="backdrop"></div>
+    <div class="sun-rays"></div>
+    <div class="aquarium">
+        <div class="fish fish1">🐟</div>
+        <div class="fish fish2">🐠</div>
+        <div class="fish fish3">🐟</div>
+    </div>
 
     <div class="card">
-        <!-- КВЕСТ: ШАГ 1 -->
         <div class="step active" id="step-1">
-            <span class="icon">🎣</span>
-            <h1>Ти готовий до справжньої рибалки?</h1>
-            <p>Є пропозиція, від якої важко відмовитися: світанок, свіже повітря, тиша над водою та хороший кльов 🐟</p>
+            <div class="float-zone" onclick="fishBite()">
+                <div class="water-ring"></div>
+                <div class="water-ring" style="animation-delay: 1.5s;"></div>
+                <div class="bobber" id="main-bobber">🎈</div>
+            </div>
+            
+            <h1>Ти готовій до справжньої рибалки?</h1>
+            <p>Є пропозиція, від якої важко відмовитися: світанок, свіже повітря, тиша над водою та хороший кльов 🌊</p>
             <div class="btn-group">
                 <button class="btn btn-main" onclick="nextStep(2)">🔥 Я в ділі!</button>
                 <button class="btn btn-secondary" id="btn-no" onmouseover="runAway()" onclick="runAway()">Та ну, ліньки...</button>
             </div>
         </div>
 
-        <!-- КВЕСТ: ШАГ 2 -->
         <div class="step" id="step-2">
-            <span class="icon">🎒</span>
+            <span style="font-size: 45px; display:block; margin-bottom:15px;">🎒</span>
             <h1>Збираємо екіпірування</h1>
             <p>Що візьмеш із собою? Обери варіанти:</p>
             
             <div class="gear-options">
-                <div class="gear-item" onclick="toggleGear(this, 'Фідер/Вудка')">
+                <div class="gear-item" onclick="toggleGear(this, 'Вудка')">
                     <div>🎣</div>
                     <label>Вудка / Фідер</label>
                 </div>
@@ -128,7 +227,7 @@
                     <div>🛶</div>
                     <label>Спінінг</label>
                 </div>
-                <div class="gear-item" onclick="toggleGear(this, 'Кава/Термос')">
+                <div class="gear-item" onclick="toggleGear(this, 'Кава')">
                     <div>☕</div>
                     <label>Гаряча кава</label>
                 </div>
@@ -143,28 +242,49 @@
             </div>
         </div>
 
-        <!-- КВЕСТ: ШАГ 3 (ФИНАЛ) -->
         <div class="step" id="step-3">
-            <span class="icon">📍</span>
+            <span style="font-size: 45px; display:block; margin-bottom:15px;">📍</span>
             <h1>Секретне місце розсекречено!</h1>
             <p>Екіпірування зібрано, тримай координати збору:</p>
             
             <div class="info-box">
                 <div class="info-item"><span>📅</span> <strong>Дата:</strong> 12 липня</div>
-                <div class="info-item"><span>🕒</span> <strong>Час:</strong> 08:00 ранку</div>
-                <div class="info-item"><span>📍</span> <strong>Місце:</strong> Річка «Пасічна»</div>
+                <div class="info-item"><span>🕒</span> <strong>Час:</strong> 09:00 ранку</div>
+                <div class="info-item"><span>📍</span> <strong>Місце:</strong> Річка «На Пасічній»</div>
                 <div class="info-item"><span>🔥</span> <strong>Буде:</strong> рибалка, кава на світанку та чудова компанія!</div>
             </div>
 
             <div class="btn-group">
                 <a href="#" id="tg-link" class="btn btn-main" target="_blank">✈️ Надіслати звіт в Telegram</a>
             </div>
-            <p style="font-size: 13px; margin-top: 15px; color: #888;">Чекаю твоєї відповіді 😉</p>
+            <p style="font-size: 13px; margin-top: 15px; color: #aaa;">Чекаю твоєї відповіді 😉</p>
         </div>
     </div>
 
     <script>
         let selectedGear = [];
+
+        // Интерактивная поклевка поплавка
+        function fishBite() {
+            const bobber = document.getElementById('main-bobber');
+            const zone = document.querySelector('.float-zone');
+            
+            // Анимация ухода под воду
+            bobber.classList.add('bite');
+            
+            // Создаем резкий всплеск/брызги
+            const splash = document.createElement('div');
+            splash.classList.add('water-ring', 'splash');
+            zone.appendChild(splash);
+
+            setTimeout(() => {
+                bobber.classList.remove('bite');
+            }, 300);
+
+            setTimeout(() => {
+                splash.remove();
+            }, 400);
+        }
 
         function nextStep(stepNumber) {
             document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
@@ -175,7 +295,6 @@
             }
         }
 
-        // Выбор снастей
         function toggleGear(element, gearName) {
             element.classList.toggle('selected');
             const index = selectedGear.indexOf(gearName);
@@ -186,27 +305,20 @@
             }
         }
 
-        // Шуточный побег кнопки "Нет"
         function runAway() {
             const btnNo = document.getElementById('btn-no');
-            // Генерируем случайное смещение
             const x = Math.random() * 140 - 70; 
             const y = Math.random() * 80 - 40;
             btnNo.style.transform = `translate(${x}px, ${y}px)`;
             
-            // Меняем текст кнопки для фана
             const phrases = ["Спробуй ще!", "Нікаких відмазок!", "Кльов чекає!", "Серйозно?"];
             btnNo.innerText = phrases[Math.floor(Math.random() * phrases.length)];
         }
 
-        // Формирование ссылки в Telegram с текстом
         function generateTelegramLink() {
-            const username = "sydorenkoleo"; // Замените на ваш ник без @ (например: ivan_rybak)
-            
+            const username = "sydorenkoleo"; // Замените на ваш ник без @
             let gearText = selectedGear.length > 0 ? selectedGear.join(', ') : 'тільки себе';
             let message = `Привіт! Я в ділі на 12 липня! 🎣\nЗ собою беру: ${gearText}. До зустрічі на річці!`;
-            
-            // Кодируем текст для URL
             const encodedMessage = encodeURIComponent(message);
             document.getElementById('tg-link').href = `https://t.me/${username}?text=${encodedMessage}`;
         }
