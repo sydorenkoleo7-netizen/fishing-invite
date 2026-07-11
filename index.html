@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Запрошення на рибалку 🎣</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    }
+
+    body{
+      min-height:100vh;
+      overflow:hidden;
+      background:
+        linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.55)),
+        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80');
+      background-size:cover;
+      background-position:center;
+      color:#fff;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      padding:20px;
+    }
+
+    .card{
+      width:min(100%,560px);
+      background:rgba(0,0,0,.55);
+      backdrop-filter: blur(8px);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:28px;
+      padding:32px 24px;
+      box-shadow:0 10px 40px rgba(0,0,0,.35);
+      animation:fadeIn .8s ease;
+    }
+
+    .emoji{
+      font-size:64px;
+      animation:float 3s ease-in-out infinite;
+      margin-bottom:12px;
+    }
+
+    h1{
+      font-size:32px;
+      margin-bottom:12px;
+      line-height:1.15;
+    }
+
+    p{
+      font-size:18px;
+      line-height:1.6;
+      opacity:.95;
+      margin-bottom:18px;
+    }
+
+    .details{
+      background:rgba(255,255,255,.10);
+      border-radius:20px;
+      padding:18px;
+      margin:22px 0;
+      text-align:left;
+    }
+
+    .details div{
+      margin:10px 0;
+      font-size:17px;
+    }
+
+    .btn{
+      display:inline-block;
+      width:100%;
+      max-width:340px;
+      padding:16px 24px;
+      border-radius:999px;
+      text-decoration:none;
+      font-size:18px;
+      font-weight:700;
+      transition:.25s;
+      margin-top:8px;
+    }
+
+    .btn-primary{
+      background:#229ED9;
+      color:#fff;
+      box-shadow:0 8px 24px rgba(34,158,217,.35);
+    }
+
+    .btn-primary:hover{
+      transform:translateY(-2px) scale(1.02);
+      box-shadow:0 12px 30px rgba(34,158,217,.45);
+    }
+
+    .footer{
+      margin-top:16px;
+      font-size:14px;
+      opacity:.8;
+    }
+
+    @keyframes fadeIn{
+      from{opacity:0; transform:translateY(20px);}
+      to{opacity:1; transform:translateY(0);}
+    }
+
+    @keyframes float{
+      0%,100%{transform:translateY(0);}
+      50%{transform:translateY(-10px);}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="emoji">🎣</div>
+
+    <h1>Ти готовий до справжньої рибалки?</h1>
+
+    <p>
+      Є пропозиція, від якої важко відмовитися:
+      світанок, свіже повітря, тиша над водою та хороший кльов 🐟
+    </p>
+
+    <div class="details">
+      <div>📅 <strong>Дата:</strong> 12 липня</div>
+      <div>🕔 <strong>Час:</strong> 07:30</div>
+      <div>📍 <strong>Місце:</strong> Річка «___»</div>
+      <div>🔥 <strong>Буде:</strong> рибалка, кава на світанку та чудова компанія</div>
+    </div>
+
+    <a class="btn btn-primary"
+       href="https://t.me/sydorenkoleo"
+       target="_blank">
+      ✈️ Написати в Telegram
+    </a>
+
+    <div class="footer">
+      Чекаю твоєї відповіді 😉
+    </div>
+  </div>
+
+</body>
+</html>
