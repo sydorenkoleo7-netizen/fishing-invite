@@ -75,7 +75,7 @@
         }
         .water-surface {
             position: absolute; top: 65%; width: 140px; height: 4px;
-            background: rgba(56, 189, 248, 0.3); border-radius: 50%; blur: 2px;
+            background: rgba(56, 189, 248, 0.3); border-radius: 50%; filter: blur(2px);
         }
         .real-bobber {
             position: relative; width: 16px; height: 70px;
@@ -157,7 +157,7 @@
                 <div class="ripple" style="animation-delay: 1.5s"></div>
                 <div class="real-bobber" id="bobber"></div>
             </div>
-            <div class="game-status" id="catch-status">🎣 Клацни на поплавок, щоб перевірити кльов!</div>
+            <div class="game-status" id="catch-status">¼ Клацни на поплавок, щоб перевірити кльов!</div>
             <h1>Секретна Рибалка</h1>
             <p class="subtitle">Перевіримо твою реакцію. Спіймай хоча б одну рибину, щоб розблокувати повне запрошення!</p>
             <div class="btn-group">
@@ -217,11 +217,11 @@
                 </div>
                 <div class="info-row">
                     <div class="icon-wrap">🕒</div>
-                    <div><strong>Час збору:</strong> 09:00 ранку (без запізнень!)</div>
+                    <div><strong>Час збору:</strong> 09:00 ранку</div>
                 </div>
                 <div class="info-row">
                     <div class="icon-wrap">📍</div>
-                    <div><strong>Локація:</strong> Річка на Пасічній (координати в ТГ)</div>
+                    <div><strong>Локація:</strong> Річка на Пасічній</div>
                 </div>
                 <div class="info-row">
                     <div class="icon-wrap">✨</div>
@@ -321,11 +321,13 @@
         }
 
         function buildLink() {
-            const username = "sydorenkoleo"; // Твій юзернейм
+            // ЧИСТЫЙ ЮЗЕРНЕЙМ БЕЗ СИМВОЛА @
+            const username = "sydorenkoleo"; 
+            
             let gearStr = chosenGear.length > 0 ? chosenGear.join(', ') : 'гарний настрій';
             let rodStr = chosenRod ? chosenRod : 'Екіпірований рибак';
             
-            let message = `Привіт, капітане! На рибалку готовий! 🎣\n\nМоя роль: ${rodStr}\nЗ собою беру: ${gearStr}.\nУ грі наловив риби: ${score} шт. До зустрічі на світанку! 🌅`;
+            let message = `Привіт, капітане! На рибалку готовий! 🎣\n\nМоя роль: ${rodStr}\nЗ собою беру: ${gearStr}.\nУ грі наловив риби: ${score} шт. До зустрічі о 09:00 на Пасічній! 🌅`;
             document.getElementById('final-tg').href = `https://t.me/${username}?text=${encodeURIComponent(message)}`;
         }
     </script>
